@@ -3,10 +3,11 @@ import { Routes, Route } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-import Header from "./home/header/Header";
 import MainNav from "./home/nav/MainNav";
 import ResidentsList from "./residents/ResidentsList";
 import ProgramsList from "./programs/ProgramsList";
+
+import styles from "./App.module.css";
 
 function App() {
   const [residentsList, setResidentsList] = useState<any[]>([]);
@@ -23,17 +24,19 @@ function App() {
   }, [residentsList, programsList]);
 
   return (
-    <Routes>
-      <Route path="/" element={<MainNav />} />
-      <Route
-        path="/residents"
-        element={<ResidentsList residentsList={residentsList} />}
-      />
-      <Route
-        path="/programs"
-        element={<ProgramsList programsList={programsList} />}
-      />
-    </Routes>
+    <div className={styles.app}>
+      <Routes>
+        <Route path="/" element={<MainNav />} />
+        <Route
+          path="/residents"
+          element={<ResidentsList residentsList={residentsList} />}
+        />
+        <Route
+          path="/programs"
+          element={<ProgramsList programsList={programsList} />}
+        />
+      </Routes>
+    </div>
   );
 }
 export default App;
