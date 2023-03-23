@@ -2,4 +2,16 @@
   box-sizing: border-box;
   max-width: 1600px;
   margin: 0 auto;
+  padding-top: 2rem;
+}
+
+h1,
+h2 {
+  text-align: center;
+  padding-bottom: 1rem;
+}
+
+.link-return {
+  text-align: center;
+  text-decoration: underline;
 }
