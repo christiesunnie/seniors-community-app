@@ -3,9 +3,9 @@ import { Routes, Route } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-import MainNav from "./home/nav/MainNav";
-import ResidentsList from "./residents/ResidentsList";
-import ProgramsList from "./programs/ProgramsList";
+import MainNav from "./home/Nav/MainNav";
+import ResidentsList from "./Residents/ResidentsList";
+import ProgramsList from "./Programs/ProgramsList";
 
 import styles from "./App.module.css";
 
