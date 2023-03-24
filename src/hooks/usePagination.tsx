@@ -7,7 +7,7 @@ type paginationProps = {
   pageSize: number;
 };
 
-const DOTS = "...";
+export const DOTS = "...";
 
 const range = (start: number, end: number) => {
   let length = end - start + 1;
@@ -64,7 +64,7 @@ export const usePagination = ({
     if (shouldShowLeftDots && shouldShowRightDots) {
       let middleRange = range(leftSiblingIndex, rightSiblingIndex);
 
-      return [firstPageIndex, DOTS, middleRange, DOTS, lastPageIndex];
+      return [firstPageIndex, DOTS, ...middleRange, DOTS, lastPageIndex];
     }
   }, [totalCount, pageSize, siblingCount, currentPage]);
 

@@ -3,6 +3,12 @@
   list-style-type: none;
 }
 
+.pagination-bar {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
 .pagination-item {
   padding: 0 12px;
   height: 32px;

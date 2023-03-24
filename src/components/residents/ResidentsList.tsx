@@ -1,11 +1,25 @@
+import React, { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import styles from "../App.module.css";
+import paginationStyles from "../Pagination/Pagination.module.css";
+
+import Pagination from "../Pagination/Pagination";
 
 type residentsListProps = {
   residentsList: any[];
 };
 
+let pageSize = 10;
+
 const ResidentsList: React.FC<residentsListProps> = ({ residentsList }) => {
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const currentResidentsList = useMemo(() => {
+    const firstPageIndex = (currentPage - 1) * pageSize;
+    const lastPageIndex = firstPageIndex + pageSize;
+    return residentsList.slice(firstPageIndex, lastPageIndex);
+  }, [currentPage]);
+
   const convertedDateFunc = (dateString: string) => {
     const date = new Date(dateString);
 
@@ -23,9 +37,16 @@ const ResidentsList: React.FC<residentsListProps> = ({ residentsList }) => {
       <p className={styles["link-return"]}>
         <Link to="/">Return home</Link>
       </p>
+      <Pagination
+        className={paginationStyles["pagination-bar"]}
+        currentPage={currentPage}
+        totalCount={residentsList.length}
+        pageSize={pageSize}
+        onPageChange={(page) => setCurrentPage(page)}
+      />
       <div>
         <ul className="ui cards centered grid container">
-          {residentsList.slice(0, 21).map((resident: any) => {
+          {currentResidentsList.map((resident: any) => {
             const {
               name,
               birthday,

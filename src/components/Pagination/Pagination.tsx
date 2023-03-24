@@ -4,9 +4,9 @@ import { usePagination, DOTS } from "../../hooks/usePagination";
 import styles from "./Pagination.module.css";
 
 type paginationComponentProps = {
-  onPageChange: () => void;
+  onPageChange: (page: any) => void;
   totalCount: number;
-  siblingCount: number;
+  siblingCount?: number;
   currentPage: number;
   pageSize: number;
   className: string;
@@ -70,7 +70,7 @@ const Pagination = (props: paginationComponentProps) => {
               className={`${styles["pagination-item"]} ${
                 pageNumber === currentPage ? "selected" : ""
               }`}
-              onClick={onPageChange(pageNumber)}
+              onClick={() => onPageChange(pageNumber)}
             >
               {pageNumber}
             </li>
@@ -82,8 +82,10 @@ const Pagination = (props: paginationComponentProps) => {
         }`}
         onClick={onNext}
       >
-        <div className={`${styles.arrow} ${styles.left}`} />
+        <div className={`${styles.arrow} ${styles.right}`} />
       </li>
     </ul>
   );
 };
+
+export default Pagination;
