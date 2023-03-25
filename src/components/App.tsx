@@ -6,6 +6,7 @@ import axios from "axios";
 import MainNav from "./home/Nav/MainNav";
 import ResidentsList from "./Residents/ResidentsList";
 import ProgramsList from "./Programs/ProgramsList";
+import ResidentDetail from "./ResidentDetail/ResidentDetail";
 
 import styles from "./App.module.css";
 
@@ -30,6 +31,10 @@ function App() {
         <Route
           path="/residents"
           element={<ResidentsList residentsList={residentsList} />}
+        />
+        <Route
+          path="/residents/:userId"
+          element={<ResidentDetail residentsList={residentsList} />}
         />
         <Route
           path="/programs"

@@ -5,11 +5,11 @@ import paginationStyles from "../Pagination/Pagination.module.css";
 
 import Pagination from "../Pagination/Pagination";
 
-type residentsListProps = {
+export type residentsListProps = {
   residentsList: any[];
 };
 
-let pageSize = 10;
+let pageSize = 12;
 
 const ResidentsList: React.FC<residentsListProps> = ({ residentsList }) => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -19,17 +19,6 @@ const ResidentsList: React.FC<residentsListProps> = ({ residentsList }) => {
     const lastPageIndex = firstPageIndex + pageSize;
     return residentsList.slice(firstPageIndex, lastPageIndex);
   }, [currentPage]);
-
-  const convertedDateFunc = (dateString: string) => {
-    const date = new Date(dateString);
-
-    return date.toLocaleDateString("en-US", {
-      weekday: "long",
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
-  };
 
   return (
     <div className={styles.app}>
@@ -45,42 +34,32 @@ const ResidentsList: React.FC<residentsListProps> = ({ residentsList }) => {
         onPageChange={(page) => setCurrentPage(page)}
       />
       <div>
-        <ul className="ui cards centered grid container">
-          {currentResidentsList.map((resident: any) => {
-            const {
-              name,
-              birthday,
-              gender,
-              hobbies,
-              levelOfCare,
-              userId,
-              roomNumber,
-              moveInDate,
-            } = resident;
+        <div className="ui middle aligned divided list container">
+          {currentResidentsList
+            .sort((resident1, resident2) => {
+              if (resident1.name < resident2.name) return -1;
+              if (resident1.name > resident2.name) return 1;
+              return 0;
+            })
+            .map((resident: any) => {
+              const { name, userId } = resident;
 
-            const convertedMoveInDate = convertedDateFunc(moveInDate);
-
-            return (
-              <li key={userId} className="ui card four wide column">
-                <div className="content">
-                  <a className="header">{name}</a>
-                  <div className="meta">
-                    <span className="date">Moved in {convertedMoveInDate}</span>
+              return (
+                <div key={userId} className="item">
+                  <div className="right floated content">
+                    <Link to={`/residents/${userId}`} className="ui button">
+                      View detail
+                    </Link>
                   </div>
-                  <div className="description">
-                    <p>Room: {roomNumber}</p>
-                    <p>Gender: {gender}</p>
-                    <p>
-                      Birthday: {new Date(birthday).toLocaleDateString("en-US")}
-                    </p>
-                    <p>Level of care: {levelOfCare}</p>
-                    <p>Hobbies: {hobbies}</p>
-                  </div>
+                  <img
+                    className="ui avatar image"
+                    src="https://picsum.photos/200/300"
+                  />
+                  <div className="content">{name}</div>
                 </div>
-              </li>
-            );
-          })}
-        </ul>
+              );
+            })}
+        </div>
       </div>
     </div>
   );
