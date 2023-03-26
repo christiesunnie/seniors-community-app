@@ -17,8 +17,14 @@ const ResidentsList: React.FC<residentsListProps> = ({ residentsList }) => {
   const currentResidentsList = useMemo(() => {
     const firstPageIndex = (currentPage - 1) * pageSize;
     const lastPageIndex = firstPageIndex + pageSize;
-    return residentsList.slice(firstPageIndex, lastPageIndex);
-  }, [currentPage]);
+    return residentsList
+      ?.sort((resident1: any, resident2: any) => {
+        if (resident1.name < resident2.name) return -1;
+        if (resident1.name > resident2.name) return 1;
+        return 0;
+      })
+      .slice(firstPageIndex, lastPageIndex);
+  }, [currentPage, residentsList]);
 
   return (
     <div className={styles.app}>
@@ -35,30 +41,25 @@ const ResidentsList: React.FC<residentsListProps> = ({ residentsList }) => {
       />
       <div>
         <div className="ui middle aligned divided list container">
-          {currentResidentsList
-            .sort((resident1, resident2) => {
-              if (resident1.name < resident2.name) return -1;
-              if (resident1.name > resident2.name) return 1;
-              return 0;
-            })
-            .map((resident: any) => {
-              const { name, userId } = resident;
+          {currentResidentsList.map((resident: any) => {
+            const { name, userId } = resident;
 
-              return (
-                <div key={userId} className="item">
-                  <div className="right floated content">
-                    <Link to={`/residents/${userId}`} className="ui button">
-                      View detail
-                    </Link>
-                  </div>
-                  <img
-                    className="ui avatar image"
-                    src="https://picsum.photos/200/300"
-                  />
-                  <div className="content">{name}</div>
+            return (
+              <div key={userId} className="item">
+                <div className="right floated content">
+                  <Link to={`/residents/${userId}`} className="ui button">
+                    View detail
+                  </Link>
                 </div>
-              );
-            })}
+                <img
+                  className="ui avatar image"
+                  src="https://picsum.photos/200/300"
+                  alt=""
+                />
+                <div className="content">{name}</div>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>

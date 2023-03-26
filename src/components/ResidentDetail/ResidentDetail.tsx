@@ -1,59 +1,65 @@
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { type residentsListProps } from "../Residents/ResidentsList";
 
 const ResidentDetail: React.FC<residentsListProps> = ({ residentsList }) => {
   const { userId } = useParams();
 
-  const getResidentDetail = (userId: string | undefined) => {
-    return residentsList.find((resident) => userId === resident.userId);
+  const getResidentDetail = (userId: any) => {
+    return residentsList.find((resident: any) => userId === resident.userId);
   };
   const resident = getResidentDetail(userId);
 
-  // const {
-  //   name,
-  //   hobbies,
-  //   moveInDate,
-  //   birthday,
-  //   roomNumber,
-  //   gender,
-  //   levelOfCare,
-  // } = resident;
+  const convertedDateFunc = (dateString: string) => {
+    const date = new Date(dateString);
 
-  console.log(resident);
+    return date.toLocaleDateString("en-US", {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  };
 
-  // const convertedDateFunc = (dateString: string) => {
-  //   const date = new Date(dateString);
+  const hobbiesFunc = () => {
+    if (resident?.hobbies === null) return "N/A";
 
-  //   return date.toLocaleDateString("en-US", {
-  //     weekday: "long",
-  //     year: "numeric",
-  //     month: "long",
-  //     day: "numeric",
-  //   });
-  // };
+    const separatedHobbies = resident?.hobbies.split(",").join(", ");
+    return separatedHobbies;
+  };
 
-  // const hobbiesFunc = () => {
-  //   if (hobbies === null) return "N/A";
-
-  //   const separatedHobbies = hobbies.split(",").join(", ");
-  //   return separatedHobbies;
-  // };
-
-  // const convertedMoveInDate = convertedDateFunc(moveInDate);
+  const convertedMoveInDate = convertedDateFunc(resident?.moveInDate);
   return (
-    <div className="content">
-      Resident detail
-      {/* <a className="header">{name}</a>
-      <div className="meta">
-        <span className="date">Moved in {convertedMoveInDate}</span>
+    <div className="ui divided items container">
+      <div className="item">
+        <div className="ui small image">
+          <img src="https://picsum.photos/200/300" alt="" />
+        </div>
+        <div className="middle aligned content">
+          <p className="header">{resident?.name}</p>
+          <div className="meta">
+            <span className="cinema">Move in date: {convertedMoveInDate}</span>
+          </div>
+          <div className="description">
+            <p>Room: {resident?.roomNumber}</p>
+            <p>Gender: {resident?.gender}</p>
+            <p>
+              Birthday:{" "}
+              {new Date(resident?.birthday).toLocaleDateString("en-US")}
+            </p>
+            <p>
+              Level of care:{" "}
+              {resident?.levelOfCare !== null ? resident?.levelOfCare : "N/A"}
+            </p>
+            <p>Hobbies: {hobbiesFunc()}</p>
+          </div>
+          <div className="extra">
+            <Link to="/residents" className="ui right floated button">
+              Back to the resident list
+              <i className="right chevron icon"></i>
+            </Link>
+          </div>
+        </div>
       </div>
-      <div className="description">
-        <p>Room: {roomNumber}</p>
-        <p>Gender: {gender}</p>
-        <p>Birthday: {new Date(birthday).toLocaleDateString("en-US")}</p>
-        <p>Level of care: {levelOfCare !== null ? levelOfCare : "N/A"}</p>
-        <p>Hobbies: {hobbiesFunc()}</p>
-      </div> */}
     </div>
   );
 };

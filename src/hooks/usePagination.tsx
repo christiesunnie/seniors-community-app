@@ -57,7 +57,7 @@ export const usePagination = ({
         totalPageCount
       );
 
-      return [firstPageIndex, DOTS, rightRange];
+      return [firstPageIndex, DOTS, ...rightRange];
     }
 
     // Case 4: showing the dots left and right
