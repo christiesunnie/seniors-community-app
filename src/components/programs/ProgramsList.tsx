@@ -3,7 +3,7 @@ import styles from "../App.module.css";
 
 import ProgramLayout from "../Layout/ProgramLayout";
 
-type programsListProps = {
+export type programsListProps = {
   programsList: any[];
 };
 
@@ -21,9 +21,9 @@ const ProgramsList: React.FC<programsListProps> = ({ programsList }) => {
 
   const renderedFilteredPrograms = (modeType: string) => {
     return programsList
-      .filter((resident) => resident.mode === modeType)
-      .map((resident) => {
-        const { name, id, start, end } = resident;
+      .filter((program) => program.mode === modeType)
+      .map((program) => {
+        const { name, id, start, end } = program;
 
         const convertedStartDate = convertedDateFunc(start);
         const convertedEndDate = convertedDateFunc(end);
@@ -31,7 +31,7 @@ const ProgramsList: React.FC<programsListProps> = ({ programsList }) => {
         return (
           <div key={id} className="item">
             <div className="right floated content">
-              <Link to={`/residents/${id}`} className="ui button">
+              <Link to={`/programs/${id}`} className="ui button">
                 View detail
               </Link>
             </div>
